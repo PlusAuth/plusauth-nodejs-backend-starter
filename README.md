@@ -4,7 +4,7 @@
     Simple NodeJS Express project demonstrates basic API authorization flow with PlusAuth
     <br />
     <br />
-    <a href="https://github.com/PlusAuth/plusauth-nodejs-backend-starter"><strong>Explore the PlusAuth Express API docs »</strong></a>
+    <a href="https://docs.plusauth.com/quickStart/server-to-server/nodejs/express"><strong>Explore the PlusAuth Express API docs »</strong></a>
 </p>
 
 <details>
