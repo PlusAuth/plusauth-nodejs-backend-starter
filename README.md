@@ -12,7 +12,9 @@
     <li><a href="#about-the-project">About The Project</a></li>
     <li><a href="#prerequisites">Prerequisites</a></li>
     <li><a href="#getting-started">Getting Started</a></li>
+    <li><a href="#calling-endpoints">Calling Endpoints</a></li>
     <li><a href="#license">License</a></li>
+    <li><a href="#what-is-plusauth">What is PlusAuth</a></li>
   </ol>
 </details>
 
@@ -66,6 +68,48 @@ $ yarn start
     
 
 The example is hosted at http://localhost:3000/
+
+## Calling Endpoints
+
+All endpoints are secured and requires `access token` in request header. You can make requests to following endpoints: 
+
+- **GET** http://localhost:3000/users
+- **POST** http://localhost:3000/users
+- **PUT** http://localhost:3000/users
+- **DELETE** http://localhost:3000/users
+
+Obtain an access token using command line or a REST Client with your PlusAuth Client and API properties.
+
+```bash
+# bash
+
+curl --request POST \
+  --url 'https://<YOUR_TANENT_ID>.plusauth.com/oauth2/token' \
+  --header 'content-type: application/x-www-form-urlencoded' \
+  --data 'grant_type=client_credentials' \
+  --data 'client_id=<YOUR_CLIENT_ID>' \
+  --data 'client_secret=<YOUR_CLIENT_SECRET>' \
+  --data 'audience=<YOUR_AUDIENCE>' \
+  --data 'scope=users:read users:write users:update users:delete'
+  
+```
+
+Create a `GET` request and pass the access token you obtained as `Authorization` header. You will get following response:
+
+```bash
+# bash
+
+> curl -i http://localhost:3000/users \
+-H "Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6ImF0K2p3dCIsImtpZCI6Inh4T3l2R0hWV3dCIsImtpZ..."
+HTTP/1.1 200 OK
+Access-Control-Allow-Origin: *
+Content-Type: text/html; charset=utf-8
+Content-Length: 14
+Connection: keep-alive
+Keep-Alive: timeout=5
+
+All Users List
+```
 
 ## License
 
