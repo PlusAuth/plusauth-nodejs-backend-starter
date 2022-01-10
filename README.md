@@ -20,7 +20,7 @@
 
 ## About The Project
 
-This is a very simple NodeJS project demonstrating basic API authorization flows with PlusAuth. To keep things simple Express.js used as the server framework and express-jwt for authorization.
+This is a very simple NodeJS project demonstrating basic API authorization flows with PlusAuth. To keep things simple Express.js used as the server framework and `jsonwebtoken` used for authorization.
 
 
 ## Prerequisites
