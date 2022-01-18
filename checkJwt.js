@@ -1,29 +1,29 @@
 const jwksRsa = require('jwks-rsa');
-var jwt = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
+
+//jsonwebtoken options
+const options = {
+  audience: process.env.PLUSAUTH_AUDIENCE,
+  issuer: `${process.env.PLUSAUTH_ISSUER}`, // Validate the issuer
+  algorithms: ['RS256'], // Signing Algorithm
+};
+
+//jwks-rsa options
+const jwksClient = jwksRsa({
+  cache: true,
+  rateLimit: true,
+  jwksRequestsPerMinute: 5,
+  jwksUri: `${process.env.PLUSAUTH_ISSUER}/.well-known/jwks.json`, // Signing Keys Uri
+});
+
+function getKey(header, callback) {
+  jwksClient.getSigningKey(header.kid, function (err, key) {
+    var signingKey = key.publicKey || key.rsaPublicKey;
+    callback(null, signingKey);
+  });
+}
 
 module.exports = (scope = null) => {
-  //jsonwebtoken options
-  const options = {
-    audience: process.env.PLUSAUTH_AUDIENCE,
-    issuer: `${process.env.PLUSAUTH_ISSUER}`, // Validate the issuer
-    algorithms: ['RS256'], // Signing Algorithm
-  };
-
-  //jwks-rsa options
-  var client = jwksRsa({
-    cache: true,
-    rateLimit: true,
-    jwksRequestsPerMinute: 5,
-    jwksUri: `${process.env.PLUSAUTH_ISSUER}/.well-known/jwks.json`, // Signing Keys Uri
-  });
-
-  function getKey(header, callback) {
-    client.getSigningKey(header.kid, function (err, key) {
-      var signingKey = key.publicKey || key.rsaPublicKey;
-      callback(null, signingKey);
-    });
-  }
-
   return function (req, res, next) {
     // If token not present in request header return 401
     if (req.headers.authorization === undefined) {
